@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne,} from 'typeorm';
 import { Team } from '../teams/team.entity';
+import { Status } from '../status/status.entity';
 
 @Entity()
-export class User {
+export class Instance {
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -10,8 +11,9 @@ export class User {
     @Column()
     name: string
 
-    @Column()
-    email: string
+    @ManyToOne(type => Status)
+    @JoinColumn()
+    statusId: Status
 
     @ManyToOne(type => Team)
     @JoinColumn()

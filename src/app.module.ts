@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { TeamsModule } from './teams/teams.module';
 import { StatusModule } from './status/status.module';
+import { InstancesModule } from './instances/instances.module';
 import * as ormconfig from './ormconfig';
 
 @Module({
@@ -12,7 +13,8 @@ import * as ormconfig from './ormconfig';
     TypeOrmModule.forRoot(ormconfig),
     UsersModule,
     TeamsModule,
-    StatusModule
+    StatusModule,
+    InstancesModule
   ],
   controllers: [AppController],
   providers: [AppService],
