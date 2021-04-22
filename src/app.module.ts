@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { TeamsModule } from './teams/teams.module';
 import { StatusModule } from './status/status.module';
 import { InstancesModule } from './instances/instances.module';
+import { InstanceLogsModule } from './instance-logs/instance-logs.module';
 import * as ormconfig from './ormconfig';
 
 @Module({
@@ -14,7 +15,8 @@ import * as ormconfig from './ormconfig';
     UsersModule,
     TeamsModule,
     StatusModule,
-    InstancesModule
+    InstancesModule,
+    InstanceLogsModule
   ],
   controllers: [AppController],
   providers: [AppService],
