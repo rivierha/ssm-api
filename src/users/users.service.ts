@@ -9,8 +9,8 @@ export class UsersService {
     constructor(@InjectRepository(User) private repository: Repository<User>) { }
 
     async save(data): Promise<any> {
-        const spaceRole = this.repository.create(data)
-        return await this.repository.save(spaceRole)
+        const user = this.repository.create(data)
+        return await this.repository.save(user)
     }
 
     async findOne(id): Promise<User> {

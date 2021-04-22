@@ -9,8 +9,8 @@ export class TeamsService {
     constructor(@InjectRepository(Team) private repository: Repository<Team>) { }
 
     async save(data): Promise<any> {
-        const spaceRole = this.repository.create(data)
-        return await this.repository.save(spaceRole)
+        const team = this.repository.create(data)
+        return await this.repository.save(team)
     }
 
     async findOne(id): Promise<Team> {

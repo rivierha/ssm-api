@@ -37,7 +37,7 @@ export class UsersController {
     }
 
     @Post()
-    async create(@Res() res, @Body() body) {
+    async createUser(@Res() res, @Body() body) {
         try {
             const user = await this.service.save(body);
             return res.status(HttpStatus.OK).json({
@@ -54,7 +54,7 @@ export class UsersController {
     }
 
     @Put('/:id')
-    async update(@Res() res, @Param('id') id, @Body() data: User) {
+    async updateUser(@Res() res, @Param('id') id, @Body() data: User) {
         try {
             const user = await this.service.update(id, data);
             if (!user) {

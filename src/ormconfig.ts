@@ -6,10 +6,10 @@ const config: ConnectionOptions = {
     host: "localhost",
     username: "root",
     password: "mysqL@507",
-    database: "shopify",
+    database: "ssm_db",
     entities: [__dirname + '/**/**/*.entity{.ts,.js}'],
-    // synchronize: true,
-    // dropSchema: true,
+    synchronize: true,
+    dropSchema: true,
 }  
 
 export = config
