@@ -15,7 +15,7 @@ export class User {
 
     @ManyToOne(type => Team)
     @JoinColumn()
-    teamId: Team
+    team: Team
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;

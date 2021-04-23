@@ -7,6 +7,6 @@ import { Instance } from './instance.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Instance])],
   providers: [InstancesService],
-  controllers: [InstancesController]
+  exports: [InstancesService],
 })
 export class InstancesModule {}

@@ -7,6 +7,6 @@ import { InstanceLog } from './instance-log.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([InstanceLog])],
   providers: [InstanceLogsService],
-  controllers: [InstanceLogsController]
+  exports: [InstanceLogsService]
 })
 export class InstanceLogsModule {}
