@@ -13,11 +13,11 @@ export class Instance {
 
     @ManyToOne(type => Status)
     @JoinColumn()
-    statusId: Status
+    status: Status
 
     @ManyToOne(type => Team)
     @JoinColumn()
-    teamId: Team
+    team: Team
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;

@@ -8,7 +8,7 @@ const config: ConnectionOptions = {
     password: "mysqL@507",
     database: "ssm_db",
     entities: [__dirname + '/**/**/*.entity{.ts,.js}'],
-    // synchronize: true,
+    synchronize: true,
     // dropSchema: true,
 }  
 

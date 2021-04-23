@@ -9,7 +9,7 @@ export class TeamsService {
 
     constructor(@InjectRepository(Team) private repository: Repository<Team>) { }
 
-    private getProjectSchema() {
+    private getTeamsSchema() {
         const schema = Joi.object().keys({
             id: Joi.string(),
             name: Joi.string().required().default(''),
@@ -20,7 +20,7 @@ export class TeamsService {
     }
 
     async save(data): Promise<any> {
-        const validatedData = this.getProjectSchema().validate(data)
+        const validatedData = this.getTeamsSchema().validate(data)
         const team = this.repository.create(validatedData.value)
         return await this.repository.save(team)
     }
@@ -39,10 +39,6 @@ export class TeamsService {
 
     async delete(id): Promise<any> {
         return await this.repository.delete({ id: id })
-    }
-
-    async query(data): Promise<any> {
-        return await this.repository.createQueryBuilder('team').where(data).getManyAndCount();
     }
 
     async getRepository(): Promise<Repository<Team>> {

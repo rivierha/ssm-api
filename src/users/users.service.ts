@@ -9,7 +9,7 @@ export class UsersService {
 
     constructor(@InjectRepository(User) private repository: Repository<User>) { }
 
-    private getProjectSchema() {
+    private getUserSchema() {
         const schema = Joi.object().keys({
             id: Joi.string(),
             name: Joi.string().required(),
@@ -22,7 +22,7 @@ export class UsersService {
     }
 
     async save(data): Promise<any> {
-        const validatedData = this.getProjectSchema().validate(data)
+        const validatedData = this.getUserSchema().validate(data)
         const user = this.repository.create(validatedData.value)
         return await this.repository.save(user)
     }

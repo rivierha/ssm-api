@@ -178,6 +178,100 @@ export class AppController {
         }
     }
 
-    // Status
+    // Instances
+    @Get('instances/:id')
+    async getInstance(@Res() res, @Param('id') id) {
+        try {
+            const instance = await this.appService.createInstance(id);
+            if (!instance) {
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: 'Instance not found',
+                }); 
+            }
+            return res.status(HttpStatus.OK).json(instance);
+        } catch (error) {
+            return res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Instance not found',
+            });  
+        }
+    }
+
+    @Get('instances')
+    async getAllInstance(@Res() res, @Query() queryParams,) {
+        try {
+            const allInstances = await this.appService.getAllInstances(queryParams);
+            return res.status(HttpStatus.OK).json(allInstances);
+        } catch (error) {
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'Something went wrong. Please try again',
+            });
+        }
+    }
+
+    @Post('instances')
+    async createInstance(@Res() res, @Body() body) {
+        try {
+            const instance = await this.appService.createInstance(body);
+            if (!instance) {
+                return res.status(HttpStatus.BAD_REQUEST).json({
+                    message: 'Team cannot be null',
+                });
+            }
+            console.log(instance);
+            return res.status(HttpStatus.OK).json({
+                message: 'Instance created successfully',
+                instance,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'Something went wrong. Please try again',
+                error
+            });
+        }
+        
+    }
+
+    @Put('instances/:id')
+    async updateInstance(@Res() res, @Param('id') id, @Body() data) {
+        try {
+            const instance = await this.appService.updateInstance(id, data);
+            if (!instance) {
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: 'Instance not found',
+                }); 
+            }
+            return res.status(HttpStatus.OK).json({
+                message: 'Instance updated successfully',
+                instance,
+            });
+        } catch (error) {
+            return res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Instance not found.',
+            });
+        }
+    }
+
+    @Delete('instances/:id')
+    async deleteInstance(@Res() res, @Param('id') id) {
+        try {
+            const instance = await this.appService.deleteInstance(id);
+            if (!instance) {
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: 'Instance not found',
+                }); 
+            }
+            return res.status(HttpStatus.OK).json({
+                message: 'Instance deleted successfully',
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Instance not found.',
+                error
+            });
+        }
+    }
+
 
 }
