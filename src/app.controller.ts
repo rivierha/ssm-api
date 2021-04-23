@@ -182,7 +182,7 @@ export class AppController {
     @Get('instances/:id')
     async getInstance(@Res() res, @Param('id') id) {
         try {
-            const instance = await this.appService.createInstance(id);
+            const instance = await this.appService.getInstance(id);
             if (!instance) {
                 return res.status(HttpStatus.NOT_FOUND).json({
                     message: 'Instance not found',
@@ -277,7 +277,7 @@ export class AppController {
     @Get('logs/:id')
     async getInstanceLog(@Res() res, @Param('id') id) {
         try {
-            const log = await this.appService.createInstanceLog(id);
+            const log = await this.appService.getInstanceLog(id);
             if (!log) {
                 return res.status(HttpStatus.NOT_FOUND).json({
                     message: 'Instance-log not found',

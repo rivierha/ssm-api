@@ -41,7 +41,7 @@ export class StatusService {
             },
             {
                 id: 'INUSE',
-                name: 'MEMBER status',
+                name: 'INUSE status',
                 description: 'This status denotes in-use instance.',
             }
         ]

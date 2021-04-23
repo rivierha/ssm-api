@@ -127,7 +127,7 @@ export class AppService {
     let repository = this.instanceService.getRepository();
     let options: any = {};
 
-    options.limit = queryParams.limit ? Number(queryParams.limit) : 10;
+    options.limit = queryParams.limit ? Number(queryParams.limit) : 100;
     delete queryParams.limit;
     options.index = queryParams.index ? Number(queryParams.index) : 0;
     delete queryParams.index;
@@ -155,6 +155,8 @@ export class AppService {
   }
 
   async deleteInstance(id): Promise<any> {
+    // delete all logs of that instance
+    await this.deleteAllInstanceLogs(id);
     return await this.instanceService.delete(id);
   }
 
@@ -163,8 +165,10 @@ export class AppService {
     if (!data.user || !data.instance) {
       return;
     }
-    const instance = await this.instanceLogsService.save(data);    
-    return await this.instanceLogsService.findOne(instance.id);
+    
+    const log: any = await this.instanceLogsService.save(data);
+    await this.runScript(log.instance, log.id, log.startTime);
+    return await this.instanceLogsService.findOne(log.id);
   }
 
   async getInstanceLog(id): Promise<any> {
@@ -177,7 +181,7 @@ export class AppService {
     let repository = this.instanceLogsService.getRepository();
     let options: any = {};
 
-    options.limit = queryParams.limit ? Number(queryParams.limit) : 10;
+    options.limit = queryParams.limit ? Number(queryParams.limit) : 100;
     delete queryParams.limit;
     options.index = queryParams.index ? Number(queryParams.index) : 0;
     delete queryParams.index;
@@ -206,5 +210,27 @@ export class AppService {
 
   async deleteInstanceLog(id): Promise<any> {
     return await this.instanceLogsService.delete(id);
+  }
+
+  async runScript(instanceId, logId, startTime) {
+    await this.instanceService.update(instanceId, { status: 'INUSE' });
+    setTimeout(async () => {
+      await this.instanceService.update(instanceId, { status: 'FREE' });
+      let time = new Date();
+      let data: any = {
+        endTime: time,
+        totalTime: Math.floor((time.getTime()-startTime.getTime()) / 1000 / 60)
+      }
+      await this.instanceLogsService.update(logId, data);
+     }, 5 * 60 * 1000);
+  }
+
+  async deleteAllInstanceLogs(instanceId) {
+    let repository = this.instanceLogsService.getRepository();
+    const instances = (await repository)
+      .createQueryBuilder('instancelogs')
+      .delete()
+      .where({instance: instanceId})
+      .execute()
   }
 }

@@ -25,8 +25,8 @@ export class InstanceLog {
     @CreateDateColumn({ type: 'timestamp' })
     endTime: Date;
 
-    @CreateDateColumn({ type: 'timestamp' })
-    totalTime: Date;
+    @Column()
+    totalTime: number;
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;

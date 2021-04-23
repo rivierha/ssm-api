@@ -16,7 +16,7 @@ export class InstanceLogsService {
             user: Joi.string().required(),
             startTime: Joi.date(),
             endTime: Joi.date(),
-            totalTime: Joi.date(),
+            totalTime: Joi.number().default(0),
             createdAt: Joi.date(),
             modifiedAt: Joi.date()
         });
