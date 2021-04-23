@@ -11,16 +11,13 @@ export class InstanceLog {
     @Column()
     description: string
 
-    @Column()
-    email: string
-
     @ManyToOne(type => Instance)
     @JoinColumn()
-    instanceId: Instance
+    instance: Instance
 
     @ManyToOne(type => User)
     @JoinColumn()
-    userId: User
+    user: User
 
     @CreateDateColumn({ type: 'timestamp' })
     startTime: Date;

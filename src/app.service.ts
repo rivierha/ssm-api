@@ -158,4 +158,53 @@ export class AppService {
     return await this.instanceService.delete(id);
   }
 
+  // Instance-logs
+  async createInstanceLog(data): Promise<any> {
+    if (!data.user || !data.instance) {
+      return;
+    }
+    const instance = await this.instanceLogsService.save(data);    
+    return await this.instanceLogsService.findOne(instance.id);
+  }
+
+  async getInstanceLog(id): Promise<any> {
+    let instance = await this.instanceLogsService.findOne(id);
+    return instance;
+  }
+
+  async getAllInstanceLogs(queryParams): Promise<any> {
+
+    let repository = this.instanceLogsService.getRepository();
+    let options: any = {};
+
+    options.limit = queryParams.limit ? Number(queryParams.limit) : 10;
+    delete queryParams.limit;
+    options.index = queryParams.index ? Number(queryParams.index) : 0;
+    delete queryParams.index;
+    options.order = queryParams.order ? queryParams.order : 'createdAt';
+    delete queryParams.order;
+    options.sort = queryParams.sort ? queryParams.sort : 'desc';
+    delete queryParams.sort;
+
+    const teams = (await repository)
+      .createQueryBuilder('instancelog')
+      .leftJoinAndSelect('instancelog.user', 'user')
+      .leftJoinAndSelect('instancelog.instance','instance')
+      .where(queryParams)
+      .orderBy(`instancelog.${options.order}`, options.sort.toUpperCase())
+      .skip(options.index)
+      .take(options.limit)
+      .getMany();
+    
+    return teams;
+  }
+
+  async updateInstanceLog(id, data): Promise<any> {
+    await this.instanceLogsService.update(id, data);
+    return await this.instanceLogsService.findOne(id);
+  }
+
+  async deleteInstanceLog(id): Promise<any> {
+    return await this.instanceLogsService.delete(id);
+  }
 }

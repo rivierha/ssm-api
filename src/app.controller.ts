@@ -273,5 +273,97 @@ export class AppController {
         }
     }
 
+    // Intance-logs
+    @Get('logs/:id')
+    async getInstanceLog(@Res() res, @Param('id') id) {
+        try {
+            const log = await this.appService.createInstanceLog(id);
+            if (!log) {
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: 'Instance-log not found',
+                }); 
+            }
+            return res.status(HttpStatus.OK).json(log);
+        } catch (error) {
+            return res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Instance-log not found',
+            });  
+        }
+    }
 
+    @Get('logs')
+    async getAllInstanceLogs(@Res() res, @Query() queryParams,) {
+        try {
+            const allLogs = await this.appService.getAllInstanceLogs(queryParams);
+            return res.status(HttpStatus.OK).json(allLogs);
+        } catch (error) {
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'Something went wrong. Please try again',
+            });
+        }
+    }
+
+    @Post('logs')
+    async createInstanceLog(@Res() res, @Body() body) {
+        try {
+            const log = await this.appService.createInstanceLog(body);
+            if (!log) {
+                return res.status(HttpStatus.BAD_REQUEST).json({
+                    message: 'Instance and User required.',
+                });
+            }
+            return res.status(HttpStatus.OK).json({
+                message: 'Instance-log created successfully',
+                log,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'Something went wrong. Please try again',
+                error
+            });
+        }
+        
+    }
+
+    @Put('logs/:id')
+    async updateInstanceLog(@Res() res, @Param('id') id, @Body() data) {
+        try {
+            const log = await this.appService.updateInstanceLog(id, data);
+            if (!log) {
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: 'Instance-log not found',
+                }); 
+            }
+            return res.status(HttpStatus.OK).json({
+                message: 'Instance-log updated successfully',
+                log,
+            });
+        } catch (error) {
+            return res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Instance-log not found.',
+            });
+        }
+    }
+
+    @Delete('logs/:id')
+    async deleteInstanceLog(@Res() res, @Param('id') id) {
+        try {
+            const log = await this.appService.deleteInstanceLog(id);
+            if (!log) {
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: 'Instance-log not found',
+                }); 
+            }
+            return res.status(HttpStatus.OK).json({
+                message: 'Instance-log deleted successfully',
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Instance-log not found.',
+                error
+            });
+        }
+    }
 }
