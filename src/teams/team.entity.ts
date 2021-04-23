@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique, Index, } from 'typeorm';
 
 @Entity()
 export class Team {
@@ -7,6 +7,7 @@ export class Team {
     id: string;
 
     @Column()
+    @Index({unique: true})
     name: string
 
     @CreateDateColumn({ type: 'timestamp' })

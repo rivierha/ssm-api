@@ -2,14 +2,26 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Team } from './team.entity';
+import * as Joi from 'joi';
 
 @Injectable()
 export class TeamsService {
 
     constructor(@InjectRepository(Team) private repository: Repository<Team>) { }
 
+    private getProjectSchema() {
+        const schema = Joi.object().keys({
+            id: Joi.string(),
+            name: Joi.string().required().default(''),
+            createdAt: Joi.date(),
+            modifiedAt: Joi.date()
+        });
+        return schema;
+    }
+
     async save(data): Promise<any> {
-        const team = this.repository.create(data)
+        const validatedData = this.getProjectSchema().validate(data)
+        const team = this.repository.create(validatedData.value)
         return await this.repository.save(team)
     }
 
@@ -33,4 +45,7 @@ export class TeamsService {
         return await this.repository.createQueryBuilder('team').where(data).getManyAndCount();
     }
 
+    async getRepository(): Promise<Repository<Team>> {
+        return this.repository;
+    }
 }

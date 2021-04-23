@@ -46,7 +46,7 @@ export class UsersService {
     }
 
     async getRepository(): Promise<Repository<User>> {
-    return this.repository;
+        return this.repository;
     }
 
 }
