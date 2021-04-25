@@ -9,7 +9,7 @@ export class InstanceLog {
     id: string;
 
     @Column()
-    description: string
+    reason: string
 
     @ManyToOne(type => Instance)
     @JoinColumn()

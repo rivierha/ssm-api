@@ -11,7 +11,7 @@ export class InstanceLogsService {
     private getInstanceSchema() {
         const schema = Joi.object().keys({
             id: Joi.string(),
-            description: Joi.string().required().default(''),
+            reason: Joi.string().required().default(''),
             instance: Joi.string().required(),
             user: Joi.string().required(),
             startTime: Joi.date(),

@@ -4,6 +4,7 @@ import { InstancesService } from './instances/instances.service';
 import { StatusService } from './status/status.service';
 import { TeamsService } from './teams/teams.service';
 import { InstanceLogsService } from './instance-logs/instance-logs.service';
+import { Between } from 'typeorm';
 
 @Injectable()
 export class AppService {
@@ -194,7 +195,7 @@ export class AppService {
       .createQueryBuilder('instancelog')
       .leftJoinAndSelect('instancelog.user', 'user')
       .leftJoinAndSelect('instancelog.instance','instance')
-      .where(queryParams)
+      .where({instance: queryParams.instance, totalTime: Between(0, queryParams.totalTime)})
       .orderBy(`instancelog.${options.order}`, options.sort.toUpperCase())
       .skip(options.index)
       .take(options.limit)
@@ -213,6 +214,7 @@ export class AppService {
   }
 
   async runScript(instanceId, logId, startTime) {
+    let timeOut = Math.floor(Math.random() * (19 - 1 + 1) + 1);
     await this.instanceService.update(instanceId, { status: 'INUSE' });
     setTimeout(async () => {
       await this.instanceService.update(instanceId, { status: 'FREE' });
@@ -222,7 +224,7 @@ export class AppService {
         totalTime: Math.floor((time.getTime()-startTime.getTime()) / 1000 / 60)
       }
       await this.instanceLogsService.update(logId, data);
-     }, 5 * 60 * 1000);
+     }, timeOut * 60 * 1000);
   }
 
   async deleteAllInstanceLogs(instanceId) {
