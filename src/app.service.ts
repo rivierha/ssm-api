@@ -80,7 +80,7 @@ export class AppService {
     let repository = this.teamsService.getRepository();
     let options: any = {};
 
-    options.limit = queryParams.limit ? Number(queryParams.limit) : 10;
+    options.limit = queryParams.limit ? Number(queryParams.limit) : 50;
     delete queryParams.limit;
     options.index = queryParams.index ? Number(queryParams.index) : 0;
     delete queryParams.index;
@@ -214,17 +214,17 @@ export class AppService {
   }
 
   async runScript(instanceId, logId, startTime) {
-    let timeOut = Math.floor(Math.random() * (19 - 1 + 1) + 1);
+    let timeOut = Math.floor(Math.random() * (60 - 1 + 1) + 1);
     await this.instanceService.update(instanceId, { status: 'INUSE' });
     setTimeout(async () => {
       await this.instanceService.update(instanceId, { status: 'FREE' });
       let time = new Date();
       let data: any = {
         endTime: time,
-        totalTime: Math.floor((time.getTime()-startTime.getTime()) / 1000 / 60)
+        totalTime: Math.floor((time.getTime()-startTime.getTime()) / 1000)
       }
       await this.instanceLogsService.update(logId, data);
-     }, timeOut * 60 * 1000);
+     }, timeOut * 1000);
   }
 
   async deleteAllInstanceLogs(instanceId) {
