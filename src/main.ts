@@ -5,7 +5,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   let whitelist = [
 		'localhost:3000',
-		'localhost:4200'
+	  'localhost:4200',
+		'rivierha.github.io'
 	]
 	let matchOrigin = (origin) => {
 		if (!origin) {
