@@ -32,7 +32,7 @@ async function bootstrap() {
 		},
 		credentials: true,
 	}
-	app.enableCors();
+	app.enableCors(corsOptions);
   await app.listen(3000);
 }
 bootstrap();
