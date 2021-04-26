@@ -1,0 +1,35 @@
+import { UsersService } from './users/users.service';
+import { InstancesService } from './instances/instances.service';
+import { StatusService } from './status/status.service';
+import { TeamsService } from './teams/teams.service';
+import { InstanceLogsService } from './instance-logs/instance-logs.service';
+export declare class AppService {
+    private readonly usersService;
+    private readonly instanceService;
+    private readonly instanceLogsService;
+    private readonly teamsService;
+    private readonly statusService;
+    constructor(usersService: UsersService, instanceService: InstancesService, instanceLogsService: InstanceLogsService, teamsService: TeamsService, statusService: StatusService);
+    createUser(data: any): Promise<any>;
+    getUser(id: any): Promise<any>;
+    getAllUsers(queryParams: any): Promise<any>;
+    updateUser(id: any, data: any): Promise<any>;
+    deleteUser(id: any): Promise<any>;
+    createTeam(data: any): Promise<any>;
+    getTeam(id: any): Promise<any>;
+    getAllTeams(queryParams: any): Promise<any>;
+    updateTeam(id: any, data: any): Promise<any>;
+    deleteTeam(id: any): Promise<any>;
+    createInstance(data: any): Promise<any>;
+    getInstance(id: any): Promise<any>;
+    getAllInstances(queryParams: any): Promise<any>;
+    updateInstance(id: any, data: any): Promise<any>;
+    deleteInstance(id: any): Promise<any>;
+    createInstanceLog(data: any): Promise<any>;
+    getInstanceLog(id: any): Promise<any>;
+    getAllInstanceLogs(queryParams: any): Promise<any>;
+    updateInstanceLog(id: any, data: any): Promise<any>;
+    deleteInstanceLog(id: any): Promise<any>;
+    runScript(instanceId: any, logId: any, startTime: any): Promise<void>;
+    deleteAllInstanceLogs(instanceId: any): Promise<void>;
+}
