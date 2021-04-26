@@ -3,10 +3,10 @@ import { ConnectionOptions } from 'typeorm';
 const config: ConnectionOptions = {
     type: 'mysql',
     port: 3306,
-    host: "localhost",
+    host: "ssm-db.cpqdjt8e60xc.us-east-1.rds.amazonaws.com",
     username: "root",
-    password: "mysqL@507",
-    database: "ssm_db",
+    password: "password",
+    database: "ssm-db",
     entities: [__dirname + '/**/**/*.entity{.ts,.js}'],
     synchronize: true,
     // dropSchema: true,
