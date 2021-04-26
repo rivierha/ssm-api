@@ -5,7 +5,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   let whitelist = [
 		'localhost:3000',
-		'localhost:4200'
+		'localhost:4200',
+		'rivierha.github.io/ssm-web-app/'
 	]
 	let matchOrigin = (origin) => {
 		if (!origin) {
@@ -31,7 +32,7 @@ async function bootstrap() {
 		},
 		credentials: true,
 	}
-	app.enableCors(corsOptions);
+	app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
