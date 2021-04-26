@@ -5,7 +5,7 @@ const config: ConnectionOptions = {
     port: 3306,
     host: "localhost",
     username: "root",
-    password: "mysqL@507",
+    password: "password",
     database: "ssm_db",
     entities: [__dirname + '/**/**/*.entity{.ts,.js}'],
     synchronize: true,
